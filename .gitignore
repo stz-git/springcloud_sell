@@ -12,6 +12,7 @@ HELP.md
 .sts4-cache
 
 ### IntelliJ IDEA ###
+*.class
 */.idea
 *.iws
 *.iml
