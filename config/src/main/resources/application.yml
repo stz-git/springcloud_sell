@@ -9,7 +9,7 @@ spring:
     config:
       server:
         git:
-          uri: git@github.com:stz-git/springcloud_sell.git
+          uri: https://github.com/stz-git/springcloud_sell_config.git
 
 server:
   port: 8084
