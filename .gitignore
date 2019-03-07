@@ -1,5 +1,6 @@
 HELP.md
-/*/target/
+**/target
+config/local_repository
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###

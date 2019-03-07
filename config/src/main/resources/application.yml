@@ -10,6 +10,19 @@ spring:
       server:
         git:
           uri: https://github.com/stz-git/springcloud_sell_config.git
-
+          search-paths: config_repo
+          basedir: E:\work\IdeaProjects\springcloud_sell\config\local_repository\
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 server:
-  port: 8084
+  port: 8080
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
