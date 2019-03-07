@@ -48,7 +48,6 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
         List<ProductInfoOutput> productInfoOutputs = productClient.listForOrder(productIdList);
 
-
         // 2.orderAmount
         String orderId = KeyUtil.genUniqueKey();
         BigDecimal orderAmount = new BigDecimal(BigInteger.ZERO);
@@ -65,7 +64,13 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        //3.save orderMaster
+        //3.decreaseStock
+        List<DecreaseStockInput> decreaseStockInputList = orderDTO.getOrderDetailList().stream()
+                .map(e -> new DecreaseStockInput(e.getProductId(), e.getProductQuantity()))
+                .collect(Collectors.toList());
+        productClient.decreaseStock(decreaseStockInputList);
+
+        //4.save orderMaster
         orderDTO.setOrderId(orderId);
         orderDTO.setOrderAmount(orderAmount);
         orderDTO.setOrderStatus(OrderStatusEnum.NEW.getCode());
@@ -73,12 +78,6 @@ public class OrderServiceImpl implements OrderService {
         OrderMaster orderMaster = new OrderMaster();
         BeanUtils.copyProperties(orderDTO, orderMaster);
         orderMasterRepository.save(orderMaster);
-
-        //4.decreaseStock
-        List<DecreaseStockInput> decreaseStockInputList = orderDTO.getOrderDetailList().stream()
-                .map(e -> new DecreaseStockInput(e.getProductId(), e.getProductQuantity()))
-                .collect(Collectors.toList());
-        productClient.decreaseStock(decreaseStockInputList);
 
         return orderDTO;
     }
