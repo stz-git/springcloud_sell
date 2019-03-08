@@ -7,6 +7,8 @@ import com.imooc.order.dataobject.OrderMaster;
 import com.imooc.order.dto.OrderDTO;
 import com.imooc.order.enums.OrderStatusEnum;
 import com.imooc.order.enums.PayStatusEnum;
+import com.imooc.order.enums.ResultEnum;
+import com.imooc.order.exception.OrderException;
 import com.imooc.order.repository.OrderDetailRepository;
 import com.imooc.order.repository.OrderMasterRepository;
 import com.imooc.order.service.OrderService;
@@ -23,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -80,5 +83,23 @@ public class OrderServiceImpl implements OrderService {
         orderMasterRepository.save(orderMaster);
 
         return orderDTO;
+    }
+
+    @Override
+    @Transactional
+    public void finish(String orderId) {
+
+        Optional<OrderMaster> optional = orderMasterRepository.findById(orderId);
+        if(!optional.isPresent())
+            throw new OrderException(ResultEnum.ORDER_NOT_EXIST);
+
+        OrderMaster orderMaster = optional.get();
+        if (!orderMaster.getOrderStatus().equals(OrderStatusEnum.NEW.getCode()))
+            throw new OrderException(ResultEnum.ORDER_STATUS_ERROR);
+
+        orderMaster.setOrderStatus(OrderStatusEnum.FINISHED.getCode());
+        OrderMaster updateResult = orderMasterRepository.save(orderMaster);
+        if (updateResult == null)
+            throw new OrderException(ResultEnum.ORDER_UPDATE_FAIL);
     }
 }

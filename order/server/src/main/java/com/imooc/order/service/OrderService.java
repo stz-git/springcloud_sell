@@ -5,4 +5,6 @@ import com.imooc.order.dto.OrderDTO;
 public interface OrderService {
 
     OrderDTO create(OrderDTO orderDTO);
+
+    void finish(String orderId);
 }
