@@ -3,18 +3,15 @@ package com.imooc.product.service.impl;
 import com.imooc.product.common.DecreaseStockInput;
 import com.imooc.product.common.ProductInfoOutput;
 import com.imooc.product.dataobject.ProductInfo;
-import com.imooc.product.dto.CarDTO;
+
 import com.imooc.product.enums.ProductStatusEnum;
 import com.imooc.product.enums.ResultEnum;
 import com.imooc.product.exception.ProductException;
 import com.imooc.product.repository.ProductInfoRepository;
 import com.imooc.product.service.ProductService;
 
-import com.imooc.product.util.JsonUtil;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +23,8 @@ import java.util.stream.Collectors;
 @Service
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
-    private AmqpTemplate amqpTemplate;
+//    @Autowired
+//    private AmqpTemplate amqpTemplate;
 
     @Autowired
     private ProductInfoRepository repository;
@@ -50,13 +47,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void decreaseStock(List<DecreaseStockInput> decreaseStockInputList) {
-        List<ProductInfo> productInfoList = decreaseStockProcess(decreaseStockInputList);
-        List<ProductInfoOutput> productInfoOutputList = productInfoList.stream().map(e -> {
-            ProductInfoOutput productInfoOutput = new ProductInfoOutput();
-            BeanUtils.copyProperties(e, productInfoOutput);
-            return productInfoOutput;
-        }).collect(Collectors.toList());
-        amqpTemplate.convertAndSend("productInfoOutputList", JsonUtil.toJson(productInfoOutputList));
+//        List<ProductInfo> productInfoList = decreaseStockProcess(decreaseStockInputList);
+//        List<ProductInfoOutput> productInfoOutputList = productInfoList.stream().map(e -> {
+//            ProductInfoOutput productInfoOutput = new ProductInfoOutput();
+//            BeanUtils.copyProperties(e, productInfoOutput);
+//            return productInfoOutput;
+//        }).collect(Collectors.toList());
+//        amqpTemplate.convertAndSend("productInfoOutputList", JsonUtil.toJson(productInfoOutputList));
     }
 
     @Transactional

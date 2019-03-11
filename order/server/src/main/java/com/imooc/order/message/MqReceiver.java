@@ -1,5 +1,5 @@
 package com.imooc.order.message;
-
+/*
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
@@ -26,4 +26,4 @@ public class MqReceiver {
     public void b_process(String message){
         System.out.println("b_message: " + message);
     }
-}
+}*/

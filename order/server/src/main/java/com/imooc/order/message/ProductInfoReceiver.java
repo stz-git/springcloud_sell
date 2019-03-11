@@ -1,4 +1,5 @@
 package com.imooc.order.message;
+/*
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.imooc.order.util.JsonUtil;
@@ -24,3 +25,4 @@ public class ProductInfoReceiver {
         //save in redis
     }
 }
+*/

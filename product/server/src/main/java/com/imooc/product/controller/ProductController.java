@@ -34,11 +34,8 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/list")
+    @CrossOrigin(allowCredentials = "true")
     public ResultVO list(HttpServletRequest request){
-
-        for (Cookie cookie : request.getCookies()) {
-            log.info("cookie={}", cookie.getValue());
-        }
 
         //1.get up product
         List<ProductInfo> productInfoList = productService.findUpAll();
@@ -67,6 +64,11 @@ public class ProductController {
             productVO.setProductInfoVOList(productInfoVOList);
             productVOList.add(productVO);
         }
+
+        try {
+            Thread.sleep(2000);
+        }catch (Exception e){}
+
         return ResultUtil.success(productVOList);
     }
 
