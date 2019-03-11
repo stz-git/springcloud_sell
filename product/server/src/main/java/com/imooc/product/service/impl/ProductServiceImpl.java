@@ -47,32 +47,26 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void decreaseStock(List<DecreaseStockInput> decreaseStockInputList) {
-//        List<ProductInfo> productInfoList = decreaseStockProcess(decreaseStockInputList);
-//        List<ProductInfoOutput> productInfoOutputList = productInfoList.stream().map(e -> {
-//            ProductInfoOutput productInfoOutput = new ProductInfoOutput();
-//            BeanUtils.copyProperties(e, productInfoOutput);
-//            return productInfoOutput;
-//        }).collect(Collectors.toList());
-//        amqpTemplate.convertAndSend("productInfoOutputList", JsonUtil.toJson(productInfoOutputList));
+        decreaseStockProcess(decreaseStockInputList);
     }
 
     @Transactional
-    public List<ProductInfo> decreaseStockProcess(List<DecreaseStockInput> decreaseStockInputList) {
-        List<ProductInfo> productInfoList = new ArrayList<>();
+    public void decreaseStockProcess(List<DecreaseStockInput> decreaseStockInputList) {
+
         for (DecreaseStockInput decreaseStockInput : decreaseStockInputList) {
             Optional<ProductInfo> productInfoOptional = repository.findById(decreaseStockInput.getProductId());
+
             if (!productInfoOptional.isPresent())
                 throw new ProductException(ResultEnum.PRODUCT_NOT_EXIST);
+
             ProductInfo productInfo = productInfoOptional.get();
             Integer stock = productInfo.getProductStock() - decreaseStockInput.getProductQuantity();
             if (stock < 0)
                 throw new ProductException(ResultEnum.PRODUCT_STOCK_ERROR);
+
             productInfo.setProductStock(stock);
             repository.save(productInfo);
-
-            productInfoList.add(productInfo);
         }
-        return productInfoList;
     }
 
 

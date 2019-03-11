@@ -7,9 +7,6 @@ spring:
   application:
     name: product
 
-  jpa:
-    show-sql: true
-
 #  cloud:
 #    config:
 #      discovery:
@@ -33,3 +30,7 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 3000
+
+logging:
+  level:
+    org.springframework.cloud.openfeign: debug

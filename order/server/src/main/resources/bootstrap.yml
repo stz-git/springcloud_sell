@@ -6,6 +6,11 @@ spring:
     url: jdbc:mysql://192.168.13.253:3306/sell?characterEncoding=UTF-8&userSSL=false
     username: root
     password: 123456
+  zipkin:
+    base-url: http://localhost:9411/
+  sleuth:
+    sampler:
+      percentage: 1
 
 eureka:
   client:
@@ -37,4 +42,7 @@ hystrix:
 feign:
   hystrix:
     enabled: true
+logging:
+  level:
+    org.springframework.cloud.openfeign: debug
 
