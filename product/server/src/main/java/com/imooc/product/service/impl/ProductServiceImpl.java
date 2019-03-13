@@ -15,16 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-
-//    @Autowired
-//    private AmqpTemplate amqpTemplate;
 
     @Autowired
     private ProductInfoRepository repository;
@@ -46,12 +42,8 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public void decreaseStock(List<DecreaseStockInput> decreaseStockInputList) {
-        decreaseStockProcess(decreaseStockInputList);
-    }
-
     @Transactional
-    public void decreaseStockProcess(List<DecreaseStockInput> decreaseStockInputList) {
+    public void decreaseStock(List<DecreaseStockInput> decreaseStockInputList) {
 
         for (DecreaseStockInput decreaseStockInput : decreaseStockInputList) {
             Optional<ProductInfo> productInfoOptional = repository.findById(decreaseStockInput.getProductId());
@@ -68,6 +60,4 @@ public class ProductServiceImpl implements ProductService {
             repository.save(productInfo);
         }
     }
-
-
 }

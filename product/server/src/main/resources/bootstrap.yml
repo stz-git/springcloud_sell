@@ -1,36 +1,19 @@
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-
 spring:
   application:
     name: product
+  cloud:
+      config:
+        discovery:
+          service-id: config
+          enabled: true
+        profile: dev
 
-#  cloud:
-#    config:
-#      discovery:
-#        service-id: config
-#        enabled: true
-#      profile: dev
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.13.253:3306/sell?characterEncoding=UTF-8&userSSL=false
-    username: root
-    password: 123456
-
-server:
-  port: 8081
-
-
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 3000
-
-logging:
-  level:
-    org.springframework.cloud.openfeign: debug
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+#    define evict-rule
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90

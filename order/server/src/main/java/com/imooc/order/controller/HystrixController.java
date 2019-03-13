@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@DefaultProperties(defaultFallback = "defaultFallback")
 public class HystrixController {
 
 
@@ -29,9 +28,7 @@ public class HystrixController {
     */
 
     @GetMapping("/getProductInfoList")
-    @HystrixCommand
     public String getProductInfoList(){
         return hystrixService.getProductInfoList();
     }
-
 }

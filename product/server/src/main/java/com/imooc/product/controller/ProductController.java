@@ -34,7 +34,6 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/list")
-    @CrossOrigin(allowCredentials = "true")
     public ResultVO list(HttpServletRequest request){
 
         //1.get up product
@@ -65,20 +64,14 @@ public class ProductController {
             productVOList.add(productVO);
         }
 
-        try {
-            Thread.sleep(2000);
-        }catch (Exception e){}
-
         return ResultUtil.success(productVOList);
     }
 
-    //batch query product by id
     @PostMapping("/listForOrder")
     public List<ProductInfoOutput> listForOrder(@RequestBody List<String> productIdList){
         return productService.findList(productIdList);
     }
 
-    //batch decreaseStock
     @PostMapping("/decreaseStock")
     public void decreaseStock(@RequestBody List<DecreaseStockInput> decreaseStockInputList){
         productService.decreaseStock(decreaseStockInputList);
